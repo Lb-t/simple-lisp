@@ -9,6 +9,7 @@ typedef struct {
   void (*deinit)(sl_object_t *);
   sl_object_t *(*eval)(sl_object_t *);
   int (*parse)(sl_object_t *, const char *, unsigned int);
+  void (*print)(sl_object_t *);
 } sl_vtable_t;
 
 typedef struct {
@@ -33,7 +34,8 @@ typedef struct {
       .type_name = #name,                                                      \
       .vtable = {.init = sl_##name##_init,                                     \
                  .deinit = sl_##name##_deinit,                                 \
-                 .parse = sl_##name##_parse},                                  \
+                 .parse = sl_##name##_parse,                                   \
+                 .print = sl_##name##_print},                                  \
       .type = SL_##NAME,                                                       \
       .size = sizeof(sl_##name##_t)};
 
@@ -46,4 +48,4 @@ sl_object_t *sl_object_new(sl_type_t type);
 void sl_object_delete(sl_object_t *object);
 sl_class_t *sl_get_class_of_type(sl_type_t type);
 int sl_object_parse(sl_object_t *obj, const char *str, unsigned int len);
-int sl_object_print(sl_object_t *obj);
+void sl_object_print(sl_object_t *obj);

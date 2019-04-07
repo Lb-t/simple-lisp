@@ -22,8 +22,9 @@ void sl_object_delete(sl_object_t *obj) {
 }
 
 
-int sl_object_print(sl_object_t *obj){
-  return 0;  
+void sl_object_print(sl_object_t *obj){
+  return obj->cls->vtable.print(obj);
+  
 }
 
 int sl_object_parse(sl_object_t *obj, const char *str, unsigned int len) {
